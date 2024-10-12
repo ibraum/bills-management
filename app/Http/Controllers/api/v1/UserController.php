@@ -11,10 +11,7 @@ use App\Usecases\users\UserDeleteUsecase;
 use App\Usecases\users\UserFindOneUsecase;
 use App\Usecases\users\UserListUsecase;
 use App\Usecases\users\UserUpdateUsecase;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {

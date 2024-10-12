@@ -3,64 +3,51 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Article;
-use Illuminate\Http\Request;
+use App\Http\Requests\articles\ArticleRequest;
+use App\Http\Resources\ArticleResource;
+use App\Usecases\articles\ArticleCreateUsecase;
+use App\Usecases\articles\ArticleDeleteUsecase;
+use App\Usecases\articles\ArticleUpdateUsecase;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private ArticleCreateUsecase $articleCreateUsecase;
+    private ArticleUpdateUsecase $articleUpdateUsecase;
+    private ArticleDeleteUsecase $articleDeleteUsecase;
+    public function __construct (
+        ArticleCreateUsecase $articleCreateUsecase,
+        ArticleUpdateUsecase $articleUpdateUsecase,
+        ArticleDeleteUsecase $articleDeleteUsecase
+    )
     {
-        //
+        $this->articleCreateUsecase = $articleCreateUsecase;
+        $this->articleUpdateUsecase = $articleUpdateUsecase;
+        $this->articleDeleteUsecase = $articleDeleteUsecase;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(ArticleRequest $articleRequest) : JsonResponse
     {
-        //
+        return new JsonResponse(
+            data: new ArticleResource($this->articleCreateUsecase->execute($articleRequest)),
+            status: Response::HTTP_CREATED
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function update(ArticleRequest $articleRequest, int $id) : JsonResponse
     {
-        //
+        return new JsonResponse(
+            data: new ArticleResource($this->articleUpdateUsecase->execute($articleRequest, $id)),
+            status: Response::HTTP_OK
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Article $article)
+    public function destroy(int $id) : JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Article $article)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Article $article)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Article $article)
-    {
-        //
+        return new JsonResponse(
+            data: new ArticleResource($this->articleDeleteUsecase->execute($id)),
+            status: Response::HTTP_OK
+        );
     }
 }

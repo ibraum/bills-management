@@ -7,7 +7,6 @@ use App\Http\Requests\bills\BillChangeStatusRequest;
 use App\Http\Requests\bills\BillRequest;
 use App\Http\Requests\bills\BillUpdateRequest;
 use App\Http\Resources\BillResource;
-use App\Models\Bill;
 use App\Usecases\bills\BillChangeStatutUsecase;
 use App\Usecases\bills\BIllCreateUsecase;
 use App\Usecases\bills\BillDeleteUsecase;
@@ -15,9 +14,7 @@ use App\Usecases\bills\BillDenyUsecase;
 use App\Usecases\bills\BillFindOneUsecase;
 use App\Usecases\bills\BillListUsecase;
 use App\Usecases\bills\BillUpdateUsecase;
-use http\Message;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BillController extends Controller
