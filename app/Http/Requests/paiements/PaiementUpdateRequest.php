@@ -11,7 +11,7 @@ class PaiementUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class PaiementUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'montant' => 'numeric|required',
+            'date_paiement' => 'date|required',
+            'moyen_paiement' => 'string|required|in:carte,virement,espece'
         ];
     }
 }
